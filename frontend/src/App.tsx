@@ -152,7 +152,7 @@ function App() {
   };
 
   const updateQty = (key: string, delta: number) => {
-    setCart(prev => prev.map(i => i.cartKey === key ? { ...i, quantity: Math.max(1, i.quantity + delta) } : i));
+    setCart(prev => prev.map(i => i.cartKey === key ? { ...i, quantity: i.quantity + delta } : i).filter(i => i.quantity > 0));
   };
 
   const totalPrice = cart.reduce((sum, item) => sum + (Number(item.price) * item.quantity), 0);
@@ -589,14 +589,20 @@ function App() {
                   ))}
                 </div>
                 <div className="option-sub" style={{ marginTop: '1.5rem' }}>Topping Extra</div>
-                <div className="options-grid">
-                   {['Bakso', 'Sosis', 'Siomay', 'Dumpling'].map(t => (
-                     <div key={t} className={`option-pill ${selToppings[t] ? 'active' : ''}`} style={{ display: 'flex', justifyContent: 'space-between' }}>
-                        <span onClick={() => updateToppingQty(t, selToppings[t] ? -99 : 1)} style={{ flex: 1 }}>{t}</span>
-                        {selToppings[t] > 0 && <span>{selToppings[t]}x</span>}
-                     </div>
-                   ))}
-                </div>
+                 <div className="options-grid">
+                    {['Bakso', 'Sosis', 'Siomay', 'Dumpling', 'Telor', 'Ceker'].map(t => (
+                      <div key={t} className={`option-pill ${selToppings[t] ? 'active' : ''}`} style={{ display: 'flex', justifyContent: 'space-between', gap: '0.5rem' }}>
+                         <span onClick={() => updateToppingQty(t, selToppings[t] ? -99 : 1)} style={{ flex: 1, cursor: 'pointer' }}>{t}</span>
+                         {selToppings[t] > 0 && (
+                           <div className="qty-mini" style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', background: 'white', padding: '2px 8px', borderRadius: '10px', boxShadow: '0 2px 4px rgba(0,0,0,0.05)' }}>
+                             <button onClick={(e) => { e.stopPropagation(); updateToppingQty(t, -1); }} style={{ border: 'none', background: 'none', cursor: 'pointer', fontWeight: 900, padding: '0 4px' }}>−</button>
+                             <span style={{ fontSize: '0.8rem', fontWeight: 800 }}>{selToppings[t]}</span>
+                             <button onClick={(e) => { e.stopPropagation(); updateToppingQty(t, 1); }} style={{ border: 'none', background: 'none', cursor: 'pointer', fontWeight: 900, padding: '0 4px' }}>+</button>
+                           </div>
+                         )}
+                      </div>
+                    ))}
+                 </div>
               </>
             )}
             {configItem.options_type === 'burger_variant' && (
