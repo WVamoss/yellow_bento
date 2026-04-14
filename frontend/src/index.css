@@ -606,19 +606,26 @@ footer {
   right: 0;
 }
 
-/* Sold Out Overlay */
-.sold-out-overlay {
-  position: absolute;
-  inset: 0;
-  background: rgba(255,255,255,0.7);
-  backdrop-filter: grayscale(1) blur(2px);
+/* Login Page */
+.login-page {
+  min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #ef4444;
-  font-weight: 900;
-  font-size: 1.5rem;
-  letter-spacing: 2px;
+  background: radial-gradient(circle at top right, #FFF7ED, #FFFFFF);
+  padding: 2rem;
+}
+
+.login-card {
+  width: 100%;
+  max-width: 400px;
+  padding: 3rem;
+  border-radius: var(--radius-lg);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: var(--shadow-xl);
 }
 
 /* Options & Inputs */

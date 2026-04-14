@@ -57,6 +57,10 @@ function generateDynamicQRIS(amount: number) {
 }
 
 function App() {
+  const [scrolled, setScrolled] = useState(false);
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  // Core States
   const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
   const [cart, setCart] = useState<CartItem[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -66,8 +70,11 @@ function App() {
   const [customerName, setCustomerName] = useState('');
   const [customerWA, setCustomerWA] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('Semua');
-  const [scrolled, setScrolled] = useState(false);
-  const scrollRef = useRef<HTMLDivElement>(null);
+
+  // Auth States
+  const [isAuthenticated, setIsAuthenticated] = useState(localStorage.getItem('admin_session') === 'active');
+  const [loginUser, setLoginUser] = useState('');
+  const [loginPass, setLoginPass] = useState('');
 
   // States for variety options
   const [configItem, setConfigItem] = useState<MenuItem | null>(null);
@@ -162,6 +169,23 @@ function App() {
     }).finally(() => window.open(`https://wa.me/6281217774299?text=${message}`, '_blank'));
   };
 
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Simple verification (can be moved to API later for more security)
+    if (loginUser === 'admin' && loginPass === 'admin123') {
+      localStorage.setItem('admin_session', 'active');
+      setIsAuthenticated(true);
+    } else {
+      alert('Username atau Password salah!');
+    }
+  };
+
+  const logout = () => {
+    localStorage.removeItem('admin_session');
+    setIsAuthenticated(false);
+    window.location.href = '/';
+  };
+
   const AdminDashboard = () => {
     const [orders, setOrders] = useState<any[]>([]);
     const [stats, setStats] = useState<any>({ today_sales: 0, pending_count: 0, total_orders: 0 });
@@ -192,7 +216,10 @@ function App() {
       <div className="admin-dashboard glass" style={{ padding: '2rem', maxWidth: '1200px', margin: '2rem auto', borderRadius: '24px' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
           <h2 style={{ fontFamily: 'Playfair Display', fontSize: '2rem' }}>Admin Center</h2>
-          <button onClick={() => window.location.href='/'} className="category-chip active">Lihat Toko</button>
+          <div style={{ display: 'flex', gap: '1rem' }}>
+             <button onClick={() => window.location.href='/'} className="category-chip active">Lihat Toko</button>
+             <button onClick={logout} className="category-chip" style={{ background: '#FEE2E2', color: '#DC2626', border: 'none' }}>Logout</button>
+          </div>
         </div>
 
         <div className="stats-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1.5rem', marginBottom: '2rem' }}>
@@ -262,11 +289,34 @@ function App() {
     );
   };
 
-  const isAdmin = window.location.search === '?admin=true';
+  const AdminLoginPage = () => (
+    <div className="login-page">
+      <div className="login-card glass animate-up">
+        <img src="/assets/logo.jpg" alt="Logo" style={{ width: '80px', borderRadius: '50%', marginBottom: '2rem' }} />
+        <h2 style={{ fontFamily: 'Playfair Display', marginBottom: '0.5rem' }}>Login Admin</h2>
+        <p style={{ color: '#64748B', marginBottom: '2rem' }}>Kelola pesanan Yellow Bento 99</p>
+        <form onSubmit={handleLogin} style={{ width: '100%' }}>
+          <div className="input-group">
+            <label>Username</label>
+            <input type="text" value={loginUser} onChange={e => setLoginUser(e.target.value)} placeholder="Username admin" />
+          </div>
+          <div className="input-group">
+            <label>Password</label>
+            <input type="password" value={loginPass} onChange={e => setLoginPass(e.target.value)} placeholder="••••••••" />
+          </div>
+          <button type="submit" className="add-btn">MASUK SEKARANG</button>
+        </form>
+        <a href="/" style={{ marginTop: '1.5rem', fontSize: '0.9rem', color: '#94A3B8', textDecoration: 'none' }}>← Kembali ke Toko</a>
+      </div>
+    </div>
+  );
+
+  const isAdminRoute = window.location.search === '?admin=true';
+  const categories = ['Semua', ...Array.from(new Set(menuItems.map(i => i.category))).filter(Boolean)];
 
   return (
     <div className="app">
-      {isAdmin ? <AdminDashboard /> : (
+      {isAdminRoute ? (isAuthenticated ? <AdminDashboard /> : <AdminLoginPage />) : (
         <>
           <div className={`overlay ${(isCartOpen || isModalOpen || isOptionsOpen) ? 'open' : ''}`} onClick={() => { setIsCartOpen(false); setIsModalOpen(false); setIsOptionsOpen(false); }}></div>
 
@@ -357,7 +407,7 @@ function App() {
                   <span>KARTU MENU</span>
                   <h2>Eksplorasi Menu Utama</h2>
                   <div className="category-container" style={{ marginTop: '2.5rem' }}>
-                    {['Semua', 'Varian Kuah', 'Gorengan', 'Lumpia Burger', 'Dessert', 'Cheese Lovers', 'ETC'].map(c => (
+                    {categories.map(c => (
                       <button key={c} className={`category-chip ${selectedCategory === c ? 'active' : ''}`} onClick={() => setSelectedCategory(c)}>
                         {c}
                       </button>
