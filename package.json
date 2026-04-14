@@ -1,0 +1,11 @@
+{
+  "name": "yellow-bento-api",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node api/admin.js"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.103.0"
+  }
+}
