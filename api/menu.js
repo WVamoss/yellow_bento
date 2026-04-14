@@ -14,6 +14,8 @@ export default async function handler(req, res) {
     return res.status(200).end();
   }
 
+  console.log('Fetching menu items from Supabase...');
+
   try {
     const { data: menu_items, error } = await supabase
       .from('menu_items')
@@ -23,8 +25,10 @@ export default async function handler(req, res) {
       .order('id', { ascending: false });
 
     if (error) throw error;
+    console.log('Successfully fetched', menu_items.length, 'items');
     return res.status(200).json(menu_items);
   } catch (err) {
-    return res.status(500).json({ error: err.message });
+    console.error('Supabase Error:', err.message);
+    return res.status(500).json({ error: err.message, stack: err.stack });
   }
 }
