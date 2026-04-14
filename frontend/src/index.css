@@ -467,64 +467,24 @@ footer {
   margin-bottom: 2rem;
 }
 
+.footer-info-item {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  margin-bottom: 1.5rem;
+  color: #94A3B8;
+  font-size: 0.95rem;
+}
+
+.footer-info-item span {
+  font-size: 1.4rem;
+  min-width: 30px;
+}
+
 .market-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 0.75rem;
-}
-
-.market-item {
-  background: #1E293B; /* Darker, like the "Good" screenshot */
-  padding: 0.8rem 1rem;
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  gap: 0.8rem;
-  color: white;
-  text-decoration: none;
-  font-size: 0.85rem;
-  transition: var(--transition);
-  border: 1px solid rgba(255,255,255,0.1);
-  font-weight: 600;
-}
-
-.market-item img {
-  width: 20px;
-  height: 20px;
-}
-
-.market-item:hover {
-  background: #334155;
-  transform: translateY(-3px);
-  border-color: var(--brand-yellow);
-}
-
-.footer-info-item {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  margin-bottom: 1.25rem;
-  color: #94A3B8;
-  font-size: 0.95rem;
-}
-
-.footer-info-item i {
-  color: var(--brand-orange);
-  font-size: 1.1rem;
-}
-
-.footer-link {
-  display: block;
-  color: #94A3B8;
-  text-decoration: none;
-  margin-bottom: 0.8rem;
-  font-size: 0.95rem;
-  transition: var(--transition);
-}
-
-.footer-link:hover {
-  color: var(--brand-yellow);
-  padding-left: 8px;
 }
 
 .market-item {
@@ -534,6 +494,7 @@ footer {
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 0.5rem;
   color: #94A3B8;
   text-decoration: none;
   font-size: 0.85rem;

@@ -460,11 +460,59 @@ function App() {
 
           <footer>
             <div className="container">
-              <div className="footer-grid">
-                <div><h2>Yellow Bento 99</h2><p>Authentic Taste of Sukodono.</p></div>
-                <div><h4>Alamat</h4><p>Jl. Raya Panjunan No. 20, Sukodono - Sidoarjo</p></div>
-                <div><h4>Kontak</h4><p>0812-1777-4299</p></div>
+          <div className="footer-grid">
+            <div className="footer-logo">
+              <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '2rem' }}>
+                 <img src="/assets/logo.jpg" alt="Logo" style={{ width: '50px', borderRadius: '50%' }} />
+                 <h2 style={{ margin: 0, color: 'white' }}>Yellow Bento 99</h2>
               </div>
+              <p style={{ lineHeight: 1.8 }}>Pusat bento & gorengan kekinian nomor 1 di Sukodono dengan cita rasa premium dan harga yang tetap ramah di kantong.</p>
+            </div>
+
+            <div>
+              <h4 style={{ color: 'white', marginBottom: '2rem' }}>Alamat Toko</h4>
+              <div className="footer-info-item">
+                <span>📍</span>
+                <div>
+                  <div style={{ fontWeight: 800, color: 'white' }}>Lokasi Utama:</div>
+                  Jl. Raya Panjunan No. 20, Sukodono - Sidoarjo
+                </div>
+              </div>
+              <div className="footer-info-item">
+                <span>📱</span>
+                <div>
+                   <div style={{ fontWeight: 800, color: 'white' }}>WhatsApp:</div>
+                   0812-1777-4299
+                </div>
+              </div>
+              <div className="footer-info-item">
+                <span>🕒</span>
+                <div>
+                   <div style={{ fontWeight: 800, color: 'white' }}>Buka:</div>
+                   13.30 - 21.00 WIB
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <h4 style={{ color: 'white', marginBottom: '2rem' }}>Social & Marketplace</h4>
+              <p style={{ marginBottom: '1.5rem', fontSize: '0.9rem' }}>Cek promo terbaru kami di platform favorit Anda:</p>
+              <div className="market-grid">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=Yellow+Bento+99+Sukodono+Sidoarjo" target="_blank" className="market-item">
+                  <span>📍</span> Maps
+                </a>
+                <a href="https://www.instagram.com/yellowbento99" target="_blank" className="market-item">
+                  <span>📸</span> IG
+                </a>
+                <a href="https://wa.me/6281217774299" target="_blank" className="market-item">
+                   <span>💬</span> WA
+                </a>
+                <a href="https://shopee.co.id/yellowbento" target="_blank" className="market-item">
+                  <span>🛍️</span> Shopee
+                </a>
+              </div>
+            </div>
+          </div>
               <div className="bottom-bar">
                 <p>© 2024 Yellow Bento 99. All rights reserved.</p>
               </div>
